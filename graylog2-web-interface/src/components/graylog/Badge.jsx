@@ -1,9 +1,8 @@
-import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 // eslint-disable-next-line no-restricted-imports
 import { Badge as BootstrapBadge } from 'react-bootstrap';
 
-const StyledBadge = styled(BootstrapBadge)(({ bsStyle, theme }) => {
+const Badge = styled(BootstrapBadge)(({ bsStyle = 'default', theme }) => {
   if (!bsStyle) {
     return undefined;
   }
@@ -17,11 +16,4 @@ const StyledBadge = styled(BootstrapBadge)(({ bsStyle, theme }) => {
   `;
 });
 
-const Badge = forwardRef(({ ...props }, ref) => {
-  return (
-    <StyledBadge ref={ref} {...props} />
-  );
-});
-
 export default Badge;
-export { StyledBadge };

@@ -1089,7 +1089,14 @@
       "node_modules/has-symbols/index.js": 260,
       "node_modules/has-symbols/shams.js": 261,
       "node_modules/prop-types-extra/node_modules/warning/warning.js": 262,
-      "node_modules/chroma-js/chroma.js": 47
+      "node_modules/chroma-js/chroma.js": 47,
+      "node_modules/moment/locale/en-in.js": 33,
+      "node_modules/moment/locale/en-sg.js": 48,
+      "node_modules/moment/locale/fil.js": 75,
+      "node_modules/moment/locale/gom-deva.js": 99,
+      "node_modules/moment/locale/oc-lnc.js": 112,
+      "node_modules/moment/locale/tk.js": 114,
+      "node_modules/moment/locale/zh-mo.js": 115
     },
     "usedIds": {
       "0": 0,

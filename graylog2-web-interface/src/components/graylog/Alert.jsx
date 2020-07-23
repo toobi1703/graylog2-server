@@ -1,14 +1,9 @@
-import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 // eslint-disable-next-line no-restricted-imports
 import { Alert as BootstrapAlert } from 'react-bootstrap';
 
-const StyledAlert = styled(BootstrapAlert)(({ bsStyle, theme }) => {
-  if (!bsStyle) {
-    return undefined;
-  }
-
+const Alert = styled(BootstrapAlert)(({ bsStyle = 'info', theme }) => {
   const borderColor = theme.colors.variant.light[bsStyle];
   const backgroundColor = theme.colors.variant.lightest[bsStyle];
 
@@ -34,12 +29,6 @@ const StyledAlert = styled(BootstrapAlert)(({ bsStyle, theme }) => {
       }
     }
   `;
-});
-
-const Alert = forwardRef(({ bsStyle, ...props }, ref) => {
-  return (
-    <StyledAlert {...props} bsStyle={bsStyle} ref={ref} />
-  );
 });
 
 Alert.propTypes = {

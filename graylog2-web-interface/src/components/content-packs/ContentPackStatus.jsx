@@ -3,10 +3,10 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router';
 
-import { StyledBadge } from 'components/graylog/Badge';
+import Badge from 'components/graylog/Badge';
 import Routes from 'routing/Routes';
 
-const StatusBadge = styled(StyledBadge)(({ status, theme }) => {
+const StatusBadge = styled(Badge)(({ status, theme }) => {
   const { success, info, warning, danger } = theme.colors.variant.dark;
   const statuses = {
     installed: success,

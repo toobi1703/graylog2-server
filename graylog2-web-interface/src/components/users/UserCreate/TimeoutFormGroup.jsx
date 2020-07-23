@@ -1,11 +1,11 @@
 // @flow strict
 import * as React from 'react';
-import { Field } from 'formik';
+import { FastField } from 'formik';
 
 import TimeoutInput from 'components/users/TimeoutInput';
 
 const TimeoutFormGroup = () => (
-  <Field name="session_timeout_ms">
+  <FastField name="session_timeout_ms">
     {({ field: { name, value, onChange } }) => (
       <TimeoutInput value={value}
                     labelSize={3}
@@ -13,7 +13,7 @@ const TimeoutFormGroup = () => (
                     name={name}
                     onChange={(newValue) => onChange({ target: { name, value: newValue } })} />
     )}
-  </Field>
+  </FastField>
 );
 
 export default TimeoutFormGroup;

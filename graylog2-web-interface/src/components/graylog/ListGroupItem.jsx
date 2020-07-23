@@ -1,4 +1,3 @@
-import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 // eslint-disable-next-line no-restricted-imports
 import { ListGroupItem as BootstrapListGroupItem } from 'react-bootstrap';
@@ -43,7 +42,7 @@ const variantStyles = css(({ bsStyle, theme }) => {
   `;
 });
 
-const StyledListGroupItem = styled(BootstrapListGroupItem)(({ theme }) => css`
+const ListGroupItem = styled(BootstrapListGroupItem)(({ theme }) => css`
   background-color: ${theme.colors.global.contentBackground};
   border-color: ${theme.colors.gray[80]};
 
@@ -115,9 +114,5 @@ const StyledListGroupItem = styled(BootstrapListGroupItem)(({ theme }) => css`
 
   ${variantStyles}
 `);
-
-const ListGroupItem = forwardRef((props, ref) => {
-  return <StyledListGroupItem {...props} ref={ref} />;
-});
 
 export default ListGroupItem;

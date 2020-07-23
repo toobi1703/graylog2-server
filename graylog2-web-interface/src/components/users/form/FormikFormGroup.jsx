@@ -1,6 +1,6 @@
 // @flow strict
 import * as React from 'react';
-import { Field } from 'formik';
+import { FastField } from 'formik';
 
 import { Input } from 'components/bootstrap';
 
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const FormField = ({ label, name, type, help, validate, ...rest }: Props) => (
-  <Field name={name} validate={validate}>
+  <FastField name={name} validate={validate}>
     {({ field: { value, onChange }, meta: { error } }) => (
       <Input {...rest}
              help={error ?? help}
@@ -31,7 +31,7 @@ const FormField = ({ label, name, type, help, validate, ...rest }: Props) => (
         {error && <FieldError>{error}</FieldError>}
       </Input>
     )}
-  </Field>
+  </FastField>
 
 );
 
