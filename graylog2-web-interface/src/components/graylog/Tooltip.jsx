@@ -8,14 +8,13 @@ import GraylogThemeProvider from 'theme/GraylogThemeProvider';
 
 const arrowSize = 10;
 const StyledTooltip = styled(BootstrapTooltip)(({ theme }) => css`
-  &.in {
+  filter: drop-shadow(0 0 3px ${theme.colors.variant.lighter.default});
+  
+  .in & {
     opacity: 1;
-    filter: drop-shadow(0 0 3px ${theme.colors.variant.lighter.default});
   }
 
   &.top {
-    transform: translate(-50%, -100%);
-  
     .tooltip-arrow {
       border-top-color: ${theme.colors.global.contentBackground};
       border-width: ${arrowSize}px ${arrowSize}px 0;
@@ -25,8 +24,6 @@ const StyledTooltip = styled(BootstrapTooltip)(({ theme }) => css`
   }
   
   &.right {
-    transform: translateY(-50%);
-    
     .tooltip-arrow {
       border-right-color: ${theme.colors.global.contentBackground};
       border-width: ${arrowSize}px ${arrowSize}px ${arrowSize}px 0;
@@ -36,8 +33,6 @@ const StyledTooltip = styled(BootstrapTooltip)(({ theme }) => css`
   }
 
   &.bottom {
-    transform: translateX(-50%);
-  
     .tooltip-arrow {
       border-bottom-color: ${theme.colors.global.contentBackground};
       border-width: 0 ${arrowSize}px ${arrowSize}px;
@@ -47,8 +42,6 @@ const StyledTooltip = styled(BootstrapTooltip)(({ theme }) => css`
   }
   
   &.left {
-    transform: translate(-100%, -50%);
-    
     .tooltip-arrow {
       border-left-color: ${theme.colors.global.contentBackground};
       border-width: ${arrowSize}px 0 ${arrowSize}px ${arrowSize}px;

@@ -46,7 +46,9 @@ const ColorPickerPopover = createReactClass({
   },
 
   handleChange(color, event) {
-    this.props.onChange(color, event, () => this.overlay.hide());
+    const { onChange } = this.props;
+
+    onChange(color, event);
   },
 
   render() {
@@ -58,8 +60,7 @@ const ColorPickerPopover = createReactClass({
     );
 
     return (
-      <OverlayTrigger ref={(c) => { this.overlay = c; }}
-                      trigger={triggerAction}
+      <OverlayTrigger trigger={triggerAction}
                       placement={placement}
                       overlay={popover}
                       rootClose>
