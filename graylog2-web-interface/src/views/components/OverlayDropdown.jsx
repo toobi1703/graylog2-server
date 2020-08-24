@@ -10,7 +10,7 @@ const StyledList = styled.ul(({ show, theme }) => css`
   padding-right: 5px;
   color: ${theme.colors.gray[40]};
   z-index: 1050;
-  min-width: 'max-content';
+  min-width: max-content;
   display: ${show ? 'block' : 'none'};
 `);
 
