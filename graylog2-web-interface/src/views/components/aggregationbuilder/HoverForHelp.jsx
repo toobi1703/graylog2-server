@@ -1,7 +1,6 @@
 import React, { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
-import { Portal } from 'react-portal';
-import { Position } from 'react-overlays';
+import { Overlay } from 'react-overlays';
 
 import { Popover } from 'components/graylog';
 import { Icon } from 'components/common';
@@ -28,15 +27,13 @@ class HoverForHelp extends Component {
     }
 
     return (
-      <Portal>
-        <Position container={document.body}
-                  placement="bottom"
-                  target={this.hoverTarget.current}>
-          <Popover title={title} id="configuration-popover">
-            {children}
-          </Popover>
-        </Position>
-      </Portal>
+      <Overlay show
+               placement="bottom"
+               target={this.hoverTarget.current}>
+        <Popover title={title} id="configuration-popover">
+          {children}
+        </Popover>
+      </Overlay>
     );
   }
 

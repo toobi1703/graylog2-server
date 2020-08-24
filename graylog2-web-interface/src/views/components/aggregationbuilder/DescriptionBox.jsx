@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Portal } from 'react-portal';
-import { Position } from 'react-overlays';
+import { Overlay } from 'react-overlays';
 import styled, { css } from 'styled-components';
 
 import { Popover } from 'components/graylog';
@@ -56,15 +55,13 @@ class DescriptionBox extends React.Component {
     });
 
     return (
-      <Portal>
-        <Position container={document.body}
-                  placement="bottom"
-                  target={this.target}>
-          <Popover title="Config options" id="config-popover">
-            {configurableElement}
-          </Popover>
-        </Position>
-      </Portal>
+      <Overlay show
+               placement="bottom"
+               target={this.target}>
+        <Popover title="Config options" id="config-popover">
+          {configurableElement}
+        </Popover>
+      </Overlay>
     );
   };
 
