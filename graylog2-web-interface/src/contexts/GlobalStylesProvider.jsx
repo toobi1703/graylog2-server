@@ -9,17 +9,33 @@ type Props = {
 };
 
 type StyleTypes = {
-  addGlobalStyles: (?CSSRules) => void,
+  addGlobalStyles: (stylesKey: string, styles: CSSRules) => void,
+  removeGlobalStyles: (stylesKey: string) => void,
 };
 
-export const GlobalStylesContext = createContext<StyleTypes>({ addGlobalStyles: () => {} });
+export const GlobalStylesContext = createContext<StyleTypes>({ addGlobalStyles: () => {}, removeGlobalStyles: () => {} });
+
+type StylesMap = {
+  [string]: ?CSSRules,
+};
 
 const GlobalStylesProvider = ({ children }: Props) => {
-  const [additionalStyles, addGlobalStyles] = useState<?CSSRules>();
+  const [additionalStylesMap, setAdditionalStylesMap] = useState<StylesMap>({});
+
+  const addGlobalStyles = (stylesKey: string, styles: CSSRules) => {
+    const newStylesMap = { ...additionalStylesMap, [stylesKey]: styles };
+    setAdditionalStylesMap(newStylesMap);
+  };
+
+  const removeGlobalStyles = (stylesKey) => {
+    const newStylesMap = { ...additionalStylesMap };
+    delete newStylesMap[stylesKey];
+    setAdditionalStylesMap(newStylesMap);
+  };
 
   return (
-    <GlobalStylesContext.Provider value={{ addGlobalStyles }}>
-      <ThemeStyles additionalStyles={additionalStyles} />
+    <GlobalStylesContext.Provider value={{ addGlobalStyles, removeGlobalStyles }}>
+      <ThemeStyles additionalStyles={additionalStylesMap} />
       {children}
     </GlobalStylesContext.Provider>
   );
@@ -723,7 +739,7 @@ const ThemeStyles = createGlobalStyle(({ additionalStyles, theme }) => css`
     height: auto;
   }
 
-  ${additionalStyles}
+  ${Object.values(additionalStyles).map((styles) => styles)}
 `);
 
 GlobalStylesProvider.propTypes = {

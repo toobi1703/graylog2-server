@@ -16,11 +16,11 @@ const { SessionActions } = CombinedProvider.get('Session');
 const LoginPage = () => {
   const [didValidateSession, setDidValidateSession] = useState(false);
   const [lastError, setLastError] = useState(undefined);
-  const { addGlobalStyles } = useContext(GlobalStylesContext);
+  const { addGlobalStyles, removeGlobalStyles } = useContext(GlobalStylesContext);
 
   useEffect(() => {
     const sessionPromise = SessionActions.validate().then((response) => {
-      addGlobalStyles(authStyles);
+      addGlobalStyles('login-page-bg', authStyles);
       setDidValidateSession(true);
 
       return response;
@@ -28,7 +28,7 @@ const LoginPage = () => {
 
     return () => {
       sessionPromise.cancel();
-      addGlobalStyles(null);
+      removeGlobalStyles('login-page-bg');
     };
   }, []);
 

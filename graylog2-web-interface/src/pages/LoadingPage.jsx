@@ -7,10 +7,14 @@ import authStyles from 'theme/styles/authStyles';
 import { GlobalStylesContext } from 'contexts/GlobalStylesProvider';
 
 const LoadingPage = ({ text }) => {
-  const { addGlobalStyles } = useContext(GlobalStylesContext);
+  const { addGlobalStyles, removeGlobalStyles } = useContext(GlobalStylesContext);
 
   useEffect(() => {
-    addGlobalStyles(authStyles);
+    addGlobalStyles('loading-page-bg', authStyles);
+
+    return () => {
+      removeGlobalStyles('loading-page-bg');
+    };
   }, []);
 
   return (

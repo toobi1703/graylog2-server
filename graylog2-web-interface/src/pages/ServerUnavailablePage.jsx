@@ -15,13 +15,13 @@ const StyledIcon = styled(Icon)`
 
 const ServerUnavailablePage = ({ server }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const { addGlobalStyles } = useContext(GlobalStylesContext);
+  const { addGlobalStyles, removeGlobalStyles } = useContext(GlobalStylesContext);
 
   useEffect(() => {
-    addGlobalStyles(authStyles);
+    addGlobalStyles('server-unavailable-page-bg', authStyles);
 
     return () => {
-      addGlobalStyles(null);
+      removeGlobalStyles('server-unavailable-page-bg');
     };
   }, []);
 
