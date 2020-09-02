@@ -10,10 +10,15 @@ import { type ThemeInterface } from 'theme';
  * text to the user explaining what that entity is and a link to create a new one.
  */
 
-const Container: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled.div(({ theme }) => `
-  font-size: ${theme.fonts.size.body};
-  text-align: center;
-`);
+const Container: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    text-align: center;
+  }
+`;
 
 const Headline = styled.h2`
   margin-top: 5px;
