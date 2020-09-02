@@ -41,13 +41,13 @@ type Props = {
 };
 
 const ErrorPage = ({ children, title, description, backgroundImage }: Props) => {
-  const { addGlobalStyles } = useContext(GlobalStylesContext);
+  const { addGlobalStyles, removeGlobalStyles } = useContext(GlobalStylesContext);
 
   useEffect(() => {
-    addGlobalStyles(errorPageStyles(backgroundImage));
+    addGlobalStyles('error-page-style', errorPageStyles(backgroundImage));
 
     return () => {
-      addGlobalStyles(null);
+      removeGlobalStyles('error-page-style');
     };
   }, [backgroundImage]);
 
