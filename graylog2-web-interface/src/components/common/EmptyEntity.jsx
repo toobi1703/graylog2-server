@@ -23,6 +23,7 @@ const Container: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled.di
 const Headline = styled.h2`
   margin-top: 5px;
   margin-bottom: 10px;
+  text-align: center;
 `;
 
 type Props = {
