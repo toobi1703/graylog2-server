@@ -21,9 +21,10 @@ const router = {
 describe('ReportedErrorBoundary', () => {
   const renderSUT = (children) => {
     const addGlobalStyles = jest.fn();
+    const removeGlobalStyles = jest.fn();
 
     return render(
-      <GlobalStylesContext.Provider value={{ addGlobalStyles }}>
+      <GlobalStylesContext.Provider value={{ addGlobalStyles, removeGlobalStyles }}>
         {children}
       </GlobalStylesContext.Provider>,
     );

@@ -11,13 +11,14 @@ import UnauthorizedErrorPage from './UnauthorizedErrorPage';
 jest.unmock('logic/rest/FetchProvider');
 
 const addGlobalStyles = jest.fn();
+const removeGlobalStyles = jest.fn();
 
 describe('UnauthorizedErrorPage', () => {
   it('displays fetch error', () => {
     suppressConsole(async () => {
       const response = { status: 403, body: { message: 'The request error message' } };
       const { getByText } = render(
-        <GlobalStylesContext.Provider value={{ addGlobalStyles }}>
+        <GlobalStylesContext.Provider value={{ addGlobalStyles, removeGlobalStyles }}>
           <UnauthorizedErrorPage error={new FetchError('The request error message', response)} />
         </GlobalStylesContext.Provider>,
       );
