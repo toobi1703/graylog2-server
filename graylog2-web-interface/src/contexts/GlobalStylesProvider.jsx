@@ -8,9 +8,14 @@ type Props = {
   children: React.Node,
 };
 
-type StyleTypes = {
+type StylesContextType = {
   addGlobalStyles: (stylesKey: string, styles: CSSRules) => void,
   removeGlobalStyles: (stylesKey: string) => void,
+};
+
+type StylesDataType = {
+  id: string,
+  styles: CSSRules,
 };
 
 const globalStyles = css(({ theme }) => css`
@@ -718,15 +723,10 @@ const generateAdditionalStyles = (newStyles) => {
   `;
 };
 
-export const GlobalStylesContext = createContext<StyleTypes>({ addGlobalStyles: () => {}, removeGlobalStyles: () => {} });
-
-type StylesCollection = [{
-  id: string,
-  styles: CSSRules,
-}];
+export const GlobalStylesContext = createContext<StylesContextType>({ addGlobalStyles: () => {}, removeGlobalStyles: () => {} });
 
 const GlobalStylesProvider = ({ children }: Props) => {
-  const [additionalStylesCollection, setAdditionalStylesCollection] = useState<StylesCollection>([]);
+  const [additionalStylesCollection, setAdditionalStylesCollection] = useState<Array<?StylesDataType>>([]);
 
   const addGlobalStyles = (stylesKey: string, styles: CSSRules) => {
     const newStylesMap = [...additionalStylesCollection, { id: stylesKey, styles }];
@@ -735,7 +735,7 @@ const GlobalStylesProvider = ({ children }: Props) => {
   };
 
   const removeGlobalStyles = (stylesKey) => {
-    const newStylesMap = additionalStylesCollection.map((style) => (style.id !== stylesKey));
+    const newStylesMap = additionalStylesCollection.filter((style) => (style?.id !== stylesKey));
 
     setAdditionalStylesCollection(newStylesMap);
   };
@@ -751,7 +751,7 @@ const GlobalStylesProvider = ({ children }: Props) => {
 const ThemeStyles = createGlobalStyle(({ additionalStyles }) => css`
   ${globalStyles}
 
-  ${generateAdditionalStyles(additionalStyles)}
+  ${additionalStyles?.length && generateAdditionalStyles(additionalStyles)}
 `);
 
 GlobalStylesProvider.propTypes = {
