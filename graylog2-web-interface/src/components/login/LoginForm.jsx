@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -14,29 +14,26 @@ const StyledFormGroup = styled(FormGroup)`
 
 const LoginForm = ({ onErrorChange }) => {
   const [isLoading, setIsLoading] = useState(false);
-  let promise;
-  let usernameInput;
-  let passwordInput;
+  const promise = useRef();
+  const usernameInput = useRef();
+  const passwordInput = useRef();
 
   useEffect(() => {
-    return () => {
-      if (promise) {
-        promise.cancel();
-      }
-    };
+    return () => promise?.current?.cancel();
   }, []);
 
   const onSignInClicked = (event) => {
     event.preventDefault();
     onErrorChange();
     setIsLoading(true);
-    const username = usernameInput.getValue();
-    const password = passwordInput.getValue();
+
+    const username = usernameInput.current.getValue();
+    const password = passwordInput.current.getValue();
     const location = document.location.host;
 
-    promise = SessionActions.login(username, password, location);
+    promise.current = SessionActions.login(username, password, location);
 
-    promise.catch((error) => {
+    promise.current?.catch((error) => {
       if (error.additional.status === 401) {
         onErrorChange('Invalid credentials, please verify them and retry.');
       } else {
@@ -44,8 +41,8 @@ const LoginForm = ({ onErrorChange }) => {
       }
     });
 
-    promise.finally(() => {
-      if (!promise.isCancelled()) {
+    promise.current?.finally(() => {
+      if (!promise?.current?.isCancelled()) {
         setIsLoading(false);
       }
     });
@@ -53,13 +50,13 @@ const LoginForm = ({ onErrorChange }) => {
 
   return (
     <form onSubmit={onSignInClicked}>
-      <Input ref={(username) => { usernameInput = username; }}
+      <Input ref={usernameInput}
              id="username"
              type="text"
              placeholder="Username"
              autoFocus />
 
-      <Input ref={(password) => { passwordInput = password; }}
+      <Input ref={passwordInput}
              id="password"
              type="password"
              placeholder="Password" />

@@ -13,35 +13,7 @@ type StyleTypes = {
   removeGlobalStyles: (stylesKey: string) => void,
 };
 
-export const GlobalStylesContext = createContext<StyleTypes>({ addGlobalStyles: () => {}, removeGlobalStyles: () => {} });
-
-type StylesMap = {
-  [string]: ?CSSRules,
-};
-
-const GlobalStylesProvider = ({ children }: Props) => {
-  const [additionalStylesMap, setAdditionalStylesMap] = useState<StylesMap>({});
-
-  const addGlobalStyles = (stylesKey: string, styles: CSSRules) => {
-    const newStylesMap = { ...additionalStylesMap, [stylesKey]: styles };
-    setAdditionalStylesMap(newStylesMap);
-  };
-
-  const removeGlobalStyles = (stylesKey) => {
-    const newStylesMap = { ...additionalStylesMap };
-    delete newStylesMap[stylesKey];
-    setAdditionalStylesMap(newStylesMap);
-  };
-
-  return (
-    <GlobalStylesContext.Provider value={{ addGlobalStyles, removeGlobalStyles }}>
-      <ThemeStyles additionalStyles={additionalStylesMap} />
-      {children}
-    </GlobalStylesContext.Provider>
-  );
-};
-
-const ThemeStyles = createGlobalStyle(({ additionalStyles, theme }) => css`
+const globalStyles = css(({ theme }) => css`
   #editor {
     height: 256px;
   }
@@ -738,8 +710,48 @@ const ThemeStyles = createGlobalStyle(({ additionalStyles, theme }) => css`
     box-shadow: none;
     height: auto;
   }
+`);
 
-  ${Object.values(additionalStyles).map((styles) => styles)}
+const generateAdditionalStyles = (newStyles) => {
+  return css`
+    ${newStyles.map((styles) => styles.styles)}
+  `;
+};
+
+export const GlobalStylesContext = createContext<StyleTypes>({ addGlobalStyles: () => {}, removeGlobalStyles: () => {} });
+
+type StylesCollection = [{
+  id: string,
+  styles: CSSRules,
+}];
+
+const GlobalStylesProvider = ({ children }: Props) => {
+  const [additionalStylesCollection, setAdditionalStylesCollection] = useState<StylesCollection>([]);
+
+  const addGlobalStyles = (stylesKey: string, styles: CSSRules) => {
+    const newStylesMap = [...additionalStylesCollection, { id: stylesKey, styles }];
+
+    setAdditionalStylesCollection(newStylesMap);
+  };
+
+  const removeGlobalStyles = (stylesKey) => {
+    const newStylesMap = additionalStylesCollection.map((style) => (style.id !== stylesKey));
+
+    setAdditionalStylesCollection(newStylesMap);
+  };
+
+  return (
+    <GlobalStylesContext.Provider value={{ addGlobalStyles, removeGlobalStyles }}>
+      <ThemeStyles additionalStyles={additionalStylesCollection} />
+      {children}
+    </GlobalStylesContext.Provider>
+  );
+};
+
+const ThemeStyles = createGlobalStyle(({ additionalStyles }) => css`
+  ${globalStyles}
+
+  ${generateAdditionalStyles(additionalStyles)}
 `);
 
 GlobalStylesProvider.propTypes = {

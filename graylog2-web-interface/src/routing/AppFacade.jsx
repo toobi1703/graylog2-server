@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import loadAsync from 'routing/loadAsync';
 import ServerUnavailablePage from 'pages/ServerUnavailablePage';
 import StoreProvider from 'injection/StoreProvider';
 import connect from 'stores/connect';
+import CombinedProvider from 'injection/CombinedProvider';
 
 import 'bootstrap/less/bootstrap.less';
 import 'toastr/toastr.less';
 
+const { SessionActions } = CombinedProvider.get('Session');
 const SessionStore = StoreProvider.getStore('Session');
 const ServerAvailabilityStore = StoreProvider.getStore('ServerAvailability');
 const CurrentUserStore = StoreProvider.getStore('CurrentUser');
@@ -20,6 +22,20 @@ const LoggedInPage = loadAsync(() => import(/* webpackChunkName: "LoggedInPage" 
 const SERVER_PING_TIMEOUT = 20000;
 
 const AppFacade = ({ currentUser, server, sessionId }) => {
+  const [didValidateSession, setDidValidateSession] = useState(false);
+
+  useEffect(() => {
+    const sessionPromise = SessionActions.validate().then((response) => {
+      setDidValidateSession(true);
+
+      return response;
+    });
+
+    return () => {
+      sessionPromise.cancel();
+    };
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(ServerAvailabilityStore.ping, SERVER_PING_TIMEOUT);
 
@@ -31,7 +47,7 @@ const AppFacade = ({ currentUser, server, sessionId }) => {
   }
 
   if (!sessionId) {
-    return <LoginPage />;
+    return didValidateSession ? <LoginPage /> : <LoadingPage text="We are preparing Graylog for you..." />;
   }
 
   if (!currentUser) {

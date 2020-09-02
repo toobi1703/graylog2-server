@@ -6,28 +6,16 @@ import { Alert } from 'components/graylog';
 import LoginForm from 'components/login/LoginForm';
 import LoginBox from 'components/login/LoginBox';
 import authStyles from 'theme/styles/authStyles';
-import CombinedProvider from 'injection/CombinedProvider';
 import { GlobalStylesContext } from 'contexts/GlobalStylesProvider';
 
-import LoadingPage from './LoadingPage';
-
-const { SessionActions } = CombinedProvider.get('Session');
-
 const LoginPage = () => {
-  const [didValidateSession, setDidValidateSession] = useState(false);
   const [lastError, setLastError] = useState(undefined);
   const { addGlobalStyles, removeGlobalStyles } = useContext(GlobalStylesContext);
 
   useEffect(() => {
-    const sessionPromise = SessionActions.validate().then((response) => {
-      addGlobalStyles('login-page-bg', authStyles);
-      setDidValidateSession(true);
-
-      return response;
-    });
+    addGlobalStyles('login-page-bg', authStyles);
 
     return () => {
-      sessionPromise.cancel();
       removeGlobalStyles('login-page-bg');
     };
   }, []);
@@ -62,14 +50,8 @@ const LoginPage = () => {
     return <LoginForm onErrorChange={setLastError} />;
   };
 
-  if (!didValidateSession) {
-    return (
-      <LoadingPage />
-    );
-  }
-
   return (
-    <DocumentTitle title="Sign in">
+    <DocumentTitle title="Sign In">
       <LoginBox>
         <legend><Icon name="users" /> Welcome to Graylog</legend>
         {formatLastError()}
