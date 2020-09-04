@@ -22,15 +22,16 @@ const HorizontalButtonToolbar = styled(ButtonToolbar)`
 `;
 
 type StepKey = StepKey;
-type Step = {
+export type Step = {
   key: StepKey,
   title: string,
   component: React.Node,
-  disabled: boolean,
+  disabled?: boolean,
 };
+export type Steps = Array<Step>;
 
 type Props = {
-  steps: Array<Step>,
+  steps: Steps,
   activeStep: StepKey,
   onStepChange: (StepKey) => void,
   children: PropTypes.element,
