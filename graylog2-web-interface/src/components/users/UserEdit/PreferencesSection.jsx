@@ -5,12 +5,11 @@ import { Formik, Form } from 'formik';
 import { PREFERENCES_THEME_MODE } from 'theme/constants';
 import { Button, Row, Col } from 'components/graylog';
 import { Input } from 'components/bootstrap';
+import { FormikFormGroup } from 'components/common';
 import ReadOnlyFormGroup from 'components/common/ReadOnlyFormGroup';
 import SectionComponent from 'components/common/Section/SectionComponent';
 import User from 'logic/users/User';
 import CombinedProvider from 'injection/CombinedProvider';
-
-import FormikFormGroup from '../form/FormikFormGroup';
 
 const { PreferencesActions } = CombinedProvider.get('Preferences');
 
