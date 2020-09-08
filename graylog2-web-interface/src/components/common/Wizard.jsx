@@ -21,25 +21,27 @@ const HorizontalButtonToolbar = styled(ButtonToolbar)`
   padding: 7px;
 `;
 
-type StepKey = StepKey;
+type StepKey = number | string;
+
 export type Step = {
   key: StepKey,
   title: string,
   component: React.Node,
   disabled?: boolean,
 };
+
 export type Steps = Array<Step>;
 
 type Props = {
   steps: Steps,
-  activeStep: StepKey,
+  activeStep: ?StepKey,
   onStepChange: (StepKey) => void,
-  children: PropTypes.element,
+  children: PropTypes.elementType,
   horizontal: boolean,
   justified: boolean,
-  containerClassName?: string,
-  NavigationComponent: React.ComponentType<{ stacked?: boolean, bsStyle: string, activeKey: StepKey, onSelect: (number | string) => void, justified: boolean}>,
-  hidePreviousNextButtons?: boolean,
+  containerClassName: string,
+  NavigationComponent: Nav,
+  hidePreviousNextButtons: boolean,
 };
 
 type State = {
@@ -112,7 +114,7 @@ class Wizard extends React.Component<Props, State> {
     this._warnOnInvalidActiveStep(activeStep, steps);
   }
 
-  _warnOnInvalidActiveStep = (activeStep: StepKey, steps: Array<Step>) => {
+  _warnOnInvalidActiveStep = (activeStep: ?StepKey, steps: Array<Step>) => {
     if (activeStep === undefined || activeStep === null) {
       return;
     }
@@ -123,7 +125,7 @@ class Wizard extends React.Component<Props, State> {
     }
   };
 
-  _isValidActiveStep = (activeStep: StepKey, steps: Array<Step>) => {
+  _isValidActiveStep = (activeStep: ?StepKey, steps: Array<Step>) => {
     if (activeStep === undefined || activeStep === null) {
       return false;
     }
