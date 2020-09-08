@@ -114,7 +114,7 @@ class Wizard extends React.Component<Props, State> {
     this._warnOnInvalidActiveStep(activeStep, steps);
   }
 
-  _warnOnInvalidActiveStep = (activeStep: ?StepKey, steps: Array<Step>) => {
+  _warnOnInvalidActiveStep = (activeStep: ?StepKey, steps: Steps) => {
     if (activeStep === undefined || activeStep === null) {
       return;
     }
@@ -125,7 +125,7 @@ class Wizard extends React.Component<Props, State> {
     }
   };
 
-  _isValidActiveStep = (activeStep: ?StepKey, steps: Array<Step>) => {
+  _isValidActiveStep = (activeStep: ?StepKey, steps: Steps) => {
     if (activeStep === undefined || activeStep === null) {
       return false;
     }

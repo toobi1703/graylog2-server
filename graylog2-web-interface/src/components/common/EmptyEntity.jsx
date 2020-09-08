@@ -5,11 +5,6 @@ import styled, { type StyledComponent } from 'styled-components';
 
 import { type ThemeInterface } from 'theme';
 
-/**
- * Component used to represent an empty entity in Graylog. This component allows us to display some larger
- * text to the user explaining what that entity is and a link to create a new one.
- */
-
 const Container: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,6 +26,10 @@ type Props = {
   title: string,
 };
 
+/**
+ * Component used to represent an empty entity in Graylog. This component allows us to display some larger
+ * text to the user explaining what that entity is and a link to create a new one.
+ */
 const EmptyEntity = ({ children, title }: Props) => (
   <Container>
     <Headline>{title}</Headline>
