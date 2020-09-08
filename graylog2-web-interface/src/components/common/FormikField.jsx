@@ -7,6 +7,7 @@ import { Input } from 'components/bootstrap';
 import FormikFieldError from './FormikFieldError';
 
 type Props = {
+  component: Field,
   label: string,
   name: string,
   type?: string,
@@ -24,8 +25,8 @@ const inputProps = (value) => {
   return { value: value ?? '' };
 };
 
-const FormikField = ({ label, name, type, help, validate, ...rest }: Props) => (
-  <Field name={name} validate={validate}>
+const FormikField = ({ component: Component, label, name, type, help, validate, ...rest }: Props) => (
+  <Component name={name} validate={validate}>
     {({ field: { value, onChange }, meta: { error } }) => {
       const inputSepcificProps = type === 'checkbox' ? checkboxProps(value) : inputProps(value);
 
@@ -43,14 +44,15 @@ const FormikField = ({ label, name, type, help, validate, ...rest }: Props) => (
         </Input>
       );
     }}
-  </Field>
+  </Component>
 );
 
 FormikField.defaultProps = {
-  type: 'text',
+  component: Field,
   help: undefined,
-  validate: () => {},
   labelClassName: undefined,
+  type: 'text',
+  validate: () => {},
   wrapperClassName: undefined,
 };
 
