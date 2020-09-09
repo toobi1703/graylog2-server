@@ -1,10 +1,15 @@
 // @flow strict
 import * as React from 'react';
 import { Field } from 'formik';
+import styled, { type StyledComponent } from 'styled-components';
 
 import { Input } from 'components/bootstrap';
 
-import FormikFieldError from './FormikFieldError';
+const ErrorMessage: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled.div(({ theme }) => `
+  width: 100%;
+  margin-top: 3px;
+  color: ${theme.colors.variant.danger};
+`);
 
 type Props = {
   component: Field,
@@ -25,10 +30,10 @@ const inputProps = (value) => {
   return { value: value ?? '' };
 };
 
-const FormikField = ({ component: Component, label, name, type, help, validate, ...rest }: Props) => (
+const FormikInput = ({ component: Component, label, name, type, help, validate, ...rest }: Props) => (
   <Component name={name} validate={validate}>
     {({ field: { value, onChange }, meta: { error } }) => {
-      const inputSepcificProps = type === 'checkbox' ? checkboxProps(value) : inputProps(value);
+      const typeSepcificProps = type === 'checkbox' ? checkboxProps(value) : inputProps(value);
 
       return (
         <Input {...rest}
@@ -39,15 +44,17 @@ const FormikField = ({ component: Component, label, name, type, help, validate, 
                name={name}
                onChange={onChange}
                type={type}
-               {...inputSepcificProps}>
-          {error && <FormikFieldError>{error}</FormikFieldError>}
+               {...typeSepcificProps}>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </Input>
       );
     }}
   </Component>
 );
 
-FormikField.defaultProps = {
+FormikInput.ErrorMessage = ErrorMessage;
+
+FormikInput.defaultProps = {
   component: Field,
   help: undefined,
   labelClassName: undefined,
@@ -56,4 +63,4 @@ FormikField.defaultProps = {
   wrapperClassName: undefined,
 };
 
-export default FormikField;
+export default FormikInput;

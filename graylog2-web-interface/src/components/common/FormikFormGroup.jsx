@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Field } from 'formik';
 
-import FormikField from './FormikField';
+import FormikInput from './FormikInput';
 
 type Props = {
   label: string,
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const FormikFormGroup = ({ component, label, name, type, help, validate, ...rest }: Props) => (
-  <FormikField {...rest}
+  <FormikInput {...rest}
                help={help}
                label={label}
                id={name}
