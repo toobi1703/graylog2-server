@@ -10,7 +10,7 @@ type Props = {
   type?: string,
   help?: string,
   validate?: (string) => ?string,
-  component?: Field,
+  component?: typeof Field,
 };
 
 const FormikFormGroup = ({ component, label, name, type, help, validate, ...rest }: Props) => (

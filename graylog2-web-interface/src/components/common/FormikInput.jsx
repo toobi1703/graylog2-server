@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Field } from 'formik';
 import styled, { type StyledComponent } from 'styled-components';
 
+import type { ThemeInterface } from 'theme';
 import { Input } from 'components/bootstrap';
 
 const ErrorMessage: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled.div(({ theme }) => `
@@ -12,7 +13,7 @@ const ErrorMessage: StyledComponent<{}, ThemeInterface, HTMLDivElement> = styled
 `);
 
 type Props = {
-  component: Field,
+  component?: typeof Field,
   label: string,
   name: string,
   type?: string,
