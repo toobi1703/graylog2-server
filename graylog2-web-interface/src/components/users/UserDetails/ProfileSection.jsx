@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import User from 'logic/users/User';
 import SectionComponent from 'components/common/Section/SectionComponent';
-import ReadOnlyFormGroup from 'components/common/ReadOnlyFormGroup';
+import { ReadOnlyFormGroup } from 'components/common';
 
 import LoggedInIcon from '../LoggedInIcon';
 
