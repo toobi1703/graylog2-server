@@ -13,7 +13,7 @@ type Props = {
   component?: typeof Field,
 };
 
-const FormikFormGroup = ({ component, label, name, type, help, validate, ...rest }: Props) => (
+const FormikFormGroup = ({ component, label, name, type, help, ...rest }: Props) => (
   <FormikInput {...rest}
                help={help}
                label={label}
